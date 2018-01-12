@@ -5,10 +5,10 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.prova.dao.QuesitoDAO;
+import br.com.prova.entities.Entidade;
+import br.com.prova.entities.Quesito;
 import br.com.prova.interfaces.GenericManagedBean;
-import br.com.prova.model.Entidade;
-import br.com.prova.model.Quesito;
+import br.com.prova.repository.QuesitoRepository;
 
 /**
  * @author Jaime Gomes
@@ -18,7 +18,7 @@ import br.com.prova.model.Quesito;
 @ViewScoped
 public class QuesitoMB implements GenericManagedBean {
 
-	private QuesitoDAO quesitoDAO = QuesitoDAO.getInstance();
+	private QuesitoRepository quesitoDAO = QuesitoRepository.getInstance();
 
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {

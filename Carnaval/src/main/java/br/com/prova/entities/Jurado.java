@@ -1,41 +1,43 @@
-
-package br.com.prova.model;
+package br.com.prova.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Classe que representa a entidade escola_samba
+ * Classe que representa a entidade jurado
  * 
  * @author Jaime Gomes
  *
  */
 @Entity
-public class EscolaSamba extends Entidade {
+@Table(name = "jurado")
+public class Jurado extends Entidade {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(name = "nome", nullable = false)
 	private String nome;
-	@Column(name = "cnpj", nullable = false, unique = true)
-	private String cnpj;
+	@Column(name = "cpf", nullable = false)
+	private String cpf;
 
-	public EscolaSamba() {
+	public Jurado() {
+
 	}
 
 	/**
 	 * @param nome
-	 * @param cnpj
-	 * @param listQuesitos
+	 * @param cpf
 	 */
-	public EscolaSamba(String nome, String cnpj) {
+	public Jurado(String nome, String cpf) {
 		super();
 		this.nome = nome;
-		this.cnpj = cnpj;
+		this.cpf = cpf;
 	}
 
 	/**
@@ -69,18 +71,18 @@ public class EscolaSamba extends Entidade {
 	}
 
 	/**
-	 * @return the cnpj
+	 * @return the cpf
 	 */
-	public String getCnpj() {
-		return cnpj;
+	public String getCpf() {
+		return cpf;
 	}
 
 	/**
-	 * @param cnpj
-	 *            the cnpj to set
+	 * @param cpf
+	 *            the cpf to set
 	 */
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 }

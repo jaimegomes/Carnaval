@@ -2,7 +2,7 @@ package br.com.prova.interfaces;
 
 import java.util.List;
 
-import br.com.prova.model.Entidade;
+import br.com.prova.entities.Entidade;
 
 public interface GenericManagedBean {
 

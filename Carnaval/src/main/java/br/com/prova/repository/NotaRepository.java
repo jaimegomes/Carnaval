@@ -1,22 +1,22 @@
-package br.com.prova.dao;
+package br.com.prova.repository;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.com.prova.entities.Entidade;
+import br.com.prova.entities.Nota;
 import br.com.prova.entitymanager.JPAEntityManager;
-import br.com.prova.interfaces.GenericDAO;
-import br.com.prova.model.Entidade;
-import br.com.prova.model.Jurado;
+import br.com.prova.interfaces.GenericRepository;
 
-public class JuradoDAO implements GenericDAO {
+public class NotaRepository implements GenericRepository {
 
 	private EntityManager entityManager;
-	private static JuradoDAO instance;
+	private static NotaRepository instance;
 
-	public static JuradoDAO getInstance() {
+	public static NotaRepository getInstance() {
 		if (instance == null) {
-			instance = new JuradoDAO();
+			instance = new NotaRepository();
 		}
 
 		return instance;
@@ -25,9 +25,9 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {
 		try {
-			return entityManager.find(Jurado.class, id);
+			return entityManager.find(Nota.class, id);
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao buscar escola por id." + e.getMessage());
 		}
 	}
 
@@ -36,13 +36,13 @@ public class JuradoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.persist((Jurado) entidade);
+			entityManager.persist((Nota) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao salvar jurado. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao salvar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -53,12 +53,12 @@ public class JuradoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Jurado) entidade);
+			entityManager.merge((Nota) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao editar jurado. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -69,12 +69,12 @@ public class JuradoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Jurado) entidade);
+			entityManager.merge((Nota) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao editar jurado. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -83,11 +83,11 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public Boolean removerPorId(Integer id) throws Exception {
 		try {
-			Jurado jurado = (Jurado) this.getPorId(id);
-			this.remover(jurado);
+			Nota nota = (Nota) this.getPorId(id);
+			this.remover(nota);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao remover jurado por id." + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao remover nota por id." + e.getMessage());
 		}
 	}
 
@@ -95,9 +95,9 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		try {
-			return entityManager.createQuery("FROM " + Jurado.class.getName()).getResultList();
+			return entityManager.createQuery("FROM " + Nota.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao listar jurados. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao listar notas. " + e.getMessage());
 		}
 	}
 

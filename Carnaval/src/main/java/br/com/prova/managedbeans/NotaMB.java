@@ -5,10 +5,10 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.prova.dao.NotaDAO;
+import br.com.prova.entities.Entidade;
+import br.com.prova.entities.Nota;
 import br.com.prova.interfaces.GenericManagedBean;
-import br.com.prova.model.Entidade;
-import br.com.prova.model.Nota;
+import br.com.prova.repository.NotaRepository;
 
 /**
  * @author Jaime Gomes
@@ -18,7 +18,7 @@ import br.com.prova.model.Nota;
 @ViewScoped
 public class NotaMB implements GenericManagedBean {
 
-	private NotaDAO notaDAO = NotaDAO.getInstance();
+	private NotaRepository notaDAO = NotaRepository.getInstance();
 
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {

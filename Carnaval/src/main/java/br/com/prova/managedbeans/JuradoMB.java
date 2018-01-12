@@ -5,10 +5,10 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.prova.dao.JuradoDAO;
+import br.com.prova.entities.Entidade;
+import br.com.prova.entities.Jurado;
 import br.com.prova.interfaces.GenericManagedBean;
-import br.com.prova.model.Entidade;
-import br.com.prova.model.Jurado;
+import br.com.prova.repository.JuradoRepository;
 
 /**
  * @author Jaime Gomes
@@ -18,7 +18,7 @@ import br.com.prova.model.Jurado;
 @ViewScoped
 public class JuradoMB implements GenericManagedBean {
 
-	private JuradoDAO juradoDAO = JuradoDAO.getInstance();
+	private JuradoRepository juradoDAO = JuradoRepository.getInstance();
 
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {

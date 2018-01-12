@@ -1,7 +1,9 @@
 /**
  * 
  */
-package br.com.prova.model;
+package br.com.prova.entities;
+
+import java.io.Serializable;
 
 /**
  * Classe abstrata que representa uma entidade
@@ -9,8 +11,9 @@ package br.com.prova.model;
  * @author Jaime
  *
  */
-public abstract class Entidade {
+public abstract class Entidade implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 
 	/**
