@@ -1,38 +1,41 @@
+
 package br.com.prova.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Classe que representa a entidade quesito
+ * Classe que representa a entidade escola_samba
  * 
  * @author Jaime Gomes
  *
  */
-public class Quesito extends Entidade{
+@Entity
+public class EscolaSamba extends Entidade {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(name = "nome", nullable = false)
 	private String nome;
-	@Column(name = "peso", nullable = false)
-	private Integer peso;
+	@Column(name = "cnpj", nullable = false, unique = true)
+	private String cnpj;
 
-	public Quesito() {
-
+	public EscolaSamba() {
 	}
 
 	/**
 	 * @param nome
-	 * @param peso
+	 * @param cnpj
+	 * @param listQuesitos
 	 */
-	public Quesito(String nome, Integer peso) {
+	public EscolaSamba(String nome, String cnpj) {
 		super();
 		this.nome = nome;
-		this.peso = peso;
+		this.cnpj = cnpj;
 	}
 
 	/**
@@ -66,18 +69,18 @@ public class Quesito extends Entidade{
 	}
 
 	/**
-	 * @return the peso
+	 * @return the cnpj
 	 */
-	public Integer getPeso() {
-		return peso;
+	public String getCnpj() {
+		return cnpj;
 	}
 
 	/**
-	 * @param peso
-	 *            the peso to set
+	 * @param cnpj
+	 *            the cnpj to set
 	 */
-	public void setPeso(Integer peso) {
-		this.peso = peso;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 }

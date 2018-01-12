@@ -2,22 +2,25 @@ package br.com.prova.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
  * Classe que representa a entidade jurado
+ * 
  * @author Jaime Gomes
  *
  */
 @Entity
-public class Jurado {
-	
+public class Jurado extends Entidade {
+
 	@Id
-	@Column(name="id", nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name="nome", nullable=false)
+	@Column(name = "nome", nullable = false)
 	private String nome;
-	@Column(name="cpf", nullable=false)
+	@Column(name = "cpf", nullable = false)
 	private String cpf;
 
 	public Jurado() {
@@ -32,6 +35,21 @@ public class Jurado {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**
