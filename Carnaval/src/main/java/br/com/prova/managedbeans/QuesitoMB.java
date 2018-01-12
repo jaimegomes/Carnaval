@@ -8,7 +8,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.prova.entities.Entidade;
 import br.com.prova.entities.Quesito;
 import br.com.prova.interfaces.GenericManagedBean;
-import br.com.prova.repository.QuesitoRepository;
+import br.com.prova.repository.QuesitoDAO;
 
 /**
  * @author Jaime Gomes
@@ -18,7 +18,7 @@ import br.com.prova.repository.QuesitoRepository;
 @ViewScoped
 public class QuesitoMB implements GenericManagedBean {
 
-	private QuesitoRepository quesitoDAO = QuesitoRepository.getInstance();
+	private QuesitoDAO quesitoDAO = QuesitoDAO.getInstance();
 
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {

@@ -5,18 +5,18 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.prova.entities.Entidade;
-import br.com.prova.entities.Nota;
+import br.com.prova.entities.Quesito;
 import br.com.prova.entitymanager.JPAEntityManager;
-import br.com.prova.interfaces.GenericRepository;
+import br.com.prova.interfaces.GenericDAO;
 
-public class NotaRepository implements GenericRepository {
+public class QuesitoDAO implements GenericDAO {
 
 	private EntityManager entityManager;
-	private static NotaRepository instance;
+	private static QuesitoDAO instance;
 
-	public static NotaRepository getInstance() {
+	public static QuesitoDAO getInstance() {
 		if (instance == null) {
-			instance = new NotaRepository();
+			instance = new QuesitoDAO();
 		}
 
 		return instance;
@@ -25,9 +25,9 @@ public class NotaRepository implements GenericRepository {
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {
 		try {
-			return entityManager.find(Nota.class, id);
+			return entityManager.find(Quesito.class, id);
 		} catch (Exception e) {
-			throw new Exception("[NotaDAO] Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao buscar escola por id." + e.getMessage());
 		}
 	}
 
@@ -36,13 +36,13 @@ public class NotaRepository implements GenericRepository {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.persist((Nota) entidade);
+			entityManager.persist((Quesito) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[NotaDAO] Erro ao salvar nota. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao salvar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -53,12 +53,12 @@ public class NotaRepository implements GenericRepository {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Nota) entidade);
+			entityManager.merge((Quesito) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -69,12 +69,12 @@ public class NotaRepository implements GenericRepository {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Nota) entidade);
+			entityManager.merge((Quesito) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -83,11 +83,11 @@ public class NotaRepository implements GenericRepository {
 	@Override
 	public Boolean removerPorId(Integer id) throws Exception {
 		try {
-			Nota nota = (Nota) this.getPorId(id);
-			this.remover(nota);
+			Quesito quesito = (Quesito) this.getPorId(id);
+			this.remover(quesito);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("[NotaDAO] Erro ao remover nota por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao remover quesito por id." + e.getMessage());
 		}
 	}
 
@@ -95,9 +95,9 @@ public class NotaRepository implements GenericRepository {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		try {
-			return entityManager.createQuery("FROM " + Nota.class.getName()).getResultList();
+			return entityManager.createQuery("FROM " + Quesito.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("[NotaDAO] Erro ao listar notas. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao listar quesitos. " + e.getMessage());
 		}
 	}
 

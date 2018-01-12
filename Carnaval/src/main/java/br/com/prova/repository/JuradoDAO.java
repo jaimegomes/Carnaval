@@ -7,16 +7,16 @@ import javax.persistence.EntityManager;
 import br.com.prova.entities.Entidade;
 import br.com.prova.entities.Jurado;
 import br.com.prova.entitymanager.JPAEntityManager;
-import br.com.prova.interfaces.GenericRepository;
+import br.com.prova.interfaces.GenericDAO;
 
-public class JuradoRepository implements GenericRepository {
+public class JuradoDAO implements GenericDAO {
 
 	private EntityManager entityManager;
-	private static JuradoRepository instance;
+	private static JuradoDAO instance;
 
-	public static JuradoRepository getInstance() {
+	public static JuradoDAO getInstance() {
 		if (instance == null) {
-			instance = new JuradoRepository();
+			instance = new JuradoDAO();
 		}
 
 		return instance;

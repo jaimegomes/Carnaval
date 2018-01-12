@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.prova.entities.Entidade;
 
-public interface GenericRepository {
+public interface GenericDAO {
 
 	public Entidade getPorId(Integer id) throws Exception;
 

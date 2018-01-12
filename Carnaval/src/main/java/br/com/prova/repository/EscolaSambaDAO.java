@@ -6,14 +6,20 @@ import javax.persistence.EntityManager;
 
 import br.com.prova.entities.Entidade;
 import br.com.prova.entities.EscolaSamba;
-import br.com.prova.interfaces.GenericRepository;
+import br.com.prova.entitymanager.JPAEntityManager;
+import br.com.prova.interfaces.GenericDAO;
 
-public class EscolaSambaRepository implements GenericRepository {
+public class EscolaSambaDAO implements GenericDAO {
 
 	private EntityManager entityManager;
+	private static EscolaSambaDAO instance;
 
-	public EscolaSambaRepository(EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public static EscolaSambaDAO getInstance() {
+		if (instance == null) {
+			instance = new EscolaSambaDAO();
+		}
+
+		return instance;
 	}
 
 	@Override
@@ -30,11 +36,14 @@ public class EscolaSambaRepository implements GenericRepository {
 	@Override
 	public Boolean inserir(Entidade entidade) throws Exception {
 		try {
-			this.entityManager.persist((EscolaSamba) entidade);
-			this.entityManager.flush();
+			entityManager = JPAEntityManager.getEntityManager();
+			entityManager.getTransaction().begin();
+			entityManager.persist((EscolaSamba) entidade);
+			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
+
 		} catch (Exception e) {
-			this.entityManager.getTransaction().rollback();
+			entityManager.getTransaction().rollback();
 			throw new Exception("[EscolaSambaDAO] Erro ao salvar escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
@@ -44,8 +53,10 @@ public class EscolaSambaRepository implements GenericRepository {
 	@Override
 	public Boolean editar(Entidade entidade) throws Exception {
 		try {
-			this.entityManager.merge((EscolaSamba) entidade);
-			this.entityManager.flush();
+			entityManager = JPAEntityManager.getEntityManager();
+			entityManager.getTransaction().begin();
+			entityManager.merge((EscolaSamba) entidade);
+			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
@@ -58,8 +69,10 @@ public class EscolaSambaRepository implements GenericRepository {
 	@Override
 	public Boolean remover(Entidade entidade) throws Exception {
 		try {
-			this.entityManager.remove((EscolaSamba) entidade);
-			this.entityManager.flush();
+			entityManager = JPAEntityManager.getEntityManager();
+			entityManager.getTransaction().begin();
+			entityManager.merge((EscolaSamba) entidade);
+			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
@@ -72,7 +85,8 @@ public class EscolaSambaRepository implements GenericRepository {
 	@Override
 	public Boolean removerPorId(Integer id) throws Exception {
 		try {
-			this.remover((EscolaSamba) this.getPorId(id));
+			EscolaSamba escolaSamba = (EscolaSamba) this.getPorId(id);
+			this.remover(escolaSamba);
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			throw new Exception("[EscolaSambaDAO] Erro ao remover escola de samba por id." + e.getMessage());
