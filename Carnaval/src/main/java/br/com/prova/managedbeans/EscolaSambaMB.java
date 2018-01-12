@@ -22,8 +22,6 @@ public class EscolaSambaMB implements GenericManagedBean {
 
 	@ManagedProperty(value="#{entityManager}")
     private EntityManager entityManager;
-	
-	
 
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {
