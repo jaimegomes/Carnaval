@@ -27,12 +27,14 @@ public class EscolaSambaDAO implements GenericDAO {
 		try {
 			return entityManager.find(EscolaSamba.class, id);
 		} catch (Exception e) {
-			throw new Exception("Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao buscar escola por id." + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
 
 	@Override
-	public Boolean salvar(Entidade entidade) throws Exception {
+	public Boolean inserir(Entidade entidade) throws Exception {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
@@ -42,7 +44,7 @@ public class EscolaSambaDAO implements GenericDAO {
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao salvar escola de samba. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao salvar escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -58,7 +60,7 @@ public class EscolaSambaDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar escola de samba. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao editar escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -74,7 +76,7 @@ public class EscolaSambaDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar escola de samba. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao editar escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -87,7 +89,7 @@ public class EscolaSambaDAO implements GenericDAO {
 			this.remover(escolaSamba);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("Erro ao remover escola de samba por id." + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao remover escola de samba por id." + e.getMessage());
 		}
 	}
 
@@ -97,7 +99,9 @@ public class EscolaSambaDAO implements GenericDAO {
 		try {
 			return entityManager.createQuery("FROM " + EscolaSamba.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("Erro ao listar escolas de samba. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao listar escolas de samba. " + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
 

@@ -27,12 +27,12 @@ public class QuesitoDAO implements GenericDAO {
 		try {
 			return entityManager.find(Quesito.class, id);
 		} catch (Exception e) {
-			throw new Exception("Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao buscar escola por id." + e.getMessage());
 		}
 	}
 
 	@Override
-	public Boolean salvar(Entidade entidade) throws Exception {
+	public Boolean inserir(Entidade entidade) throws Exception {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
@@ -42,7 +42,7 @@ public class QuesitoDAO implements GenericDAO {
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao salvar quesito. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao salvar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -58,7 +58,7 @@ public class QuesitoDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar quesito. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -74,7 +74,7 @@ public class QuesitoDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar quesito. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -87,7 +87,7 @@ public class QuesitoDAO implements GenericDAO {
 			this.remover(quesito);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("Erro ao remover quesito por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao remover quesito por id." + e.getMessage());
 		}
 	}
 
@@ -97,7 +97,7 @@ public class QuesitoDAO implements GenericDAO {
 		try {
 			return entityManager.createQuery("FROM " + Quesito.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("Erro ao listar quesitos. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao listar quesitos. " + e.getMessage());
 		}
 	}
 

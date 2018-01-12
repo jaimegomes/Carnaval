@@ -27,12 +27,12 @@ public class NotaDAO implements GenericDAO {
 		try {
 			return entityManager.find(Nota.class, id);
 		} catch (Exception e) {
-			throw new Exception("Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao buscar escola por id." + e.getMessage());
 		}
 	}
 
 	@Override
-	public Boolean salvar(Entidade entidade) throws Exception {
+	public Boolean inserir(Entidade entidade) throws Exception {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
@@ -42,7 +42,7 @@ public class NotaDAO implements GenericDAO {
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao salvar nota. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao salvar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -58,7 +58,7 @@ public class NotaDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar nota. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -74,7 +74,7 @@ public class NotaDAO implements GenericDAO {
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("Erro ao editar nota. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao editar nota. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -87,7 +87,7 @@ public class NotaDAO implements GenericDAO {
 			this.remover(nota);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("Erro ao remover nota por id." + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao remover nota por id." + e.getMessage());
 		}
 	}
 
@@ -97,7 +97,7 @@ public class NotaDAO implements GenericDAO {
 		try {
 			return entityManager.createQuery("FROM " + Nota.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("Erro ao listar notas. " + e.getMessage());
+			throw new Exception("[NotaDAO] Erro ao listar notas. " + e.getMessage());
 		}
 	}
 
