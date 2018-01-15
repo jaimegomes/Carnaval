@@ -108,46 +108,4 @@ public class NotaDAO implements GenericDAO {
 			entityManager.close();
 		}
 	}
-
-	public List<Entidade> getApuracao(Integer idEscola) throws Exception {
-		entityManager = JPAEntityManager.getEntityManager();
-
-		List<Nota> results = (List<Nota>) entityManager
-				.createQuery("SELECT n FROM Nota n WHERE n.escolaSamba = '" + idEscola + "' GROUP BY n.quesito").getResultList();
-
-		for (Entidade e : results) {
-			Nota nota = (Nota) e;
-			nota.setMaiorNota(this.getMaiorNota(nota.getQuesito().getId(), idEscola));
-			nota.setMenorNota(this.getMenorNota(nota.getQuesito().getId(), idEscola));
-			nota.setMedia(nota.getQuesito().getId(), nota.getEscolaSamba().getId(), nota.get);
-		}
-		return null;
-	}
-
-	public Integer getMenorNota(Integer quesito, Integer escola) {
-		List<Integer> results = (List<Integer>) JPAEntityManager.getEntityManager()
-				.createQuery("SELECT MIN(n.nota) FROM Nota n WHERE n.quesito = '" + quesito + "' AND n.escolaSamba = '"
-						+ escola + "'")
-				.getResultList();
-
-		return results.get(0);
-	}
-
-	public Integer getMaiorNota(Integer quesito, Integer escola) {
-		List<Integer> results = (List<Integer>) JPAEntityManager.getEntityManager()
-				.createQuery("SELECT MAX(n.nota) AS maior FROM Nota n WHERE n.quesito = '" + quesito
-						+ "' AND n.escolaSamba = '" + escola + "'")
-				.getResultList();
-
-		return results.get(0);
-	}
-	
-	public Double getMedia(Nota nota, Integer idMaiorNota, Integer idMenorNota) {
-		List<Double> results = (List<Double>) JPAEntityManager.getEntityManager()
-				.createQuery("SELECT AVG(n.nota) AS media FROM Nota n WHERE n.id <> '" + idMaiorNota
-						+ "' AND n.id <> = '" + idMenorNota + "'")
-				.getResultList();
-
-		return results.get(0);
-	}
 }

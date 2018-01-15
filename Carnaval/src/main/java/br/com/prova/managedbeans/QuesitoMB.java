@@ -47,7 +47,6 @@ public class QuesitoMB implements GenericManagedBean {
 	@Override
 	public void salvar() throws Exception {
 		try {
-
 			if (quesito.getId() == null) {
 				quesitoDAO.inserir(quesito);
 				quesitos.add(quesito);
