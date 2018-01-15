@@ -1,10 +1,17 @@
-package br.com.prova.entities;
+package br.com.prova.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +32,9 @@ public class Quesito extends Entidade {
 	private String nome;
 	@Column(name = "peso", nullable = false)
 	private Integer peso;
+	@OneToMany(mappedBy = "escolaSamba", targetEntity = Nota.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Nota> notas;
+
 
 	public Quesito() {
 
@@ -84,5 +94,20 @@ public class Quesito extends Entidade {
 	public void setPeso(Integer peso) {
 		this.peso = peso;
 	}
+
+	/**
+	 * @return the notas
+	 */
+	public List<Nota> getNotas() {
+		return notas;
+	}
+
+	/**
+	 * @param notas the notas to set
+	 */
+	public void setNotas(List<Nota> notas) {
+		this.notas = notas;
+	}
+	
 
 }

@@ -1,11 +1,16 @@
 
-package br.com.prova.entities;
+package br.com.prova.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +31,8 @@ public class EscolaSamba extends Entidade {
 	private String nome;
 	@Column(name = "cnpj", nullable = false, unique = true)
 	private String cnpj;
+	@OneToMany(mappedBy = "escolaSamba", targetEntity = Nota.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Nota> notas;
 
 	public EscolaSamba() {
 	}
@@ -84,6 +91,43 @@ public class EscolaSamba extends Entidade {
 	 */
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	/**
+	 * @return the notas
+	 */
+	public List<Nota> getNotas() {
+		return notas;
+	}
+
+	/**
+	 * @param notas
+	 *            the notas to set
+	 */
+	public void setNotas(List<Nota> notas) {
+		this.notas = notas;
+	}
+
+	/**
+	 * Formatação do CNPJ para exibição na tabela
+	 * 
+	 * @return
+	 */
+	public String getCnpjFmt() {
+		StringBuilder cnpjFmt = new StringBuilder();
+		if (this.cnpj != null && this.cnpj.length() == 14) {
+			cnpjFmt.append(this.cnpj.substring(0, 2));
+			cnpjFmt.append(".");
+			cnpjFmt.append(this.cnpj.substring(2, 5));
+			cnpjFmt.append(".");
+			cnpjFmt.append(this.cnpj.substring(5, 8));
+			cnpjFmt.append("/");
+			cnpjFmt.append(this.cnpj.substring(8, 12));
+			cnpjFmt.append("-");
+			cnpjFmt.append(this.cnpj.substring(12, 14));
+		}
+
+		return cnpjFmt.toString();
 	}
 
 }

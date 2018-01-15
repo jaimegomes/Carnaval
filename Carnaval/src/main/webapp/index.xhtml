@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:decorate template="template/layout.xhtml">
+	<ui:define name="centro">
+		<h1>Avaliação Escolas de Samba</h1>
+		<h:form id="formCadastro">
+
+			<p:messages id="msgs" />
+
+			<p:dataTable id="radioDT" var="escola"
+				value="#{EscolaSambaMB.escolas}" selection="#{NotaMB.escola}"
+				rowKey="#{escola.id}" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column selectionMode="single"
+					style="width:16px;text-align:center" />
+				<p:column headerText="Escola de Samba">
+					<h:outputText value="#{escola.nome}" />
+				</p:column>
+			</p:dataTable>
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+				<p:outputLabel value="Quesito:" />
+				<h:selectOneMenu valueChangeListener="#{NotaMB.selecionarQuesito}"
+					onchange="submit()">
+					<f:selectItem itemLabel="Selecione um quesito" itemValue="" />
+					<f:selectItems value="#{QuesitoMB.quesitos}" var="quesito"
+						itemLabel="#{quesito.nome}" itemValue="#{quesito.id}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Jurado:" />
+				<h:selectOneMenu valueChangeListener="#{NotaMB.selecionarJurado}"
+					onchange="submit()">
+					<f:selectItem itemLabel="Selecione um jurado" itemValue="" />
+					<f:selectItems value="#{JuradoMB.jurados}" var="jurado"
+						itemLabel="#{jurado.nome}" itemValue="#{jurado.id}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel for="nota" value="Nota:" />
+				<p:inputText id="nota" name="nota" value="#{NotaMB.nota.nota}"
+					maxlength="2" size="20" />
+
+				<p:commandButton id="avaliar" value="Avaliar"
+					action="#{NotaMB.avaliar}" icon="ui ui-icon-star"
+					update=":formLista:notas :formCadastro:msgs :formCadastro"
+					ajax="true">
+				</p:commandButton>
+			</h:panelGrid>
+
+		</h:form>
+
+		<h:form id="formLista">
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:dataTable id="notas" var="nota" value="#{NotaMB.notas}"
+				editable="true" style="margin-bottom:20px" selectionMode="single"
+				selection="#{NotaMB.nota}" rowKey="#{nota.id}">
+				<f:facet name="header">Notas</f:facet>
+
+				<p:column headerText="Id">
+					<h:outputText value="#{nota.id}" />
+				</p:column>
+				<p:column headerText="Quesito">
+					<h:outputText value="#{nota.quesito.nome}" />
+				</p:column>
+				<p:column headerText="Escola">
+					<h:outputText value="#{nota.escolaSamba.nome}" />
+				</p:column>
+				<p:column headerText="Jurado">
+					<h:outputFormat value="#{nota.jurado.nome}" />
+				</p:column>
+				<p:column headerText="Nota">
+					<h:outputFormat value="#{nota.nota}" />
+				</p:column>
+				<p:column headerText="Peso">
+					<h:outputFormat value="#{nota.quesito.peso}" />
+				</p:column>
+				<p:column width="25">
+					<p:commandButton icon="ui ui-icon-trash" id="btRemove"
+						action="#{NotaMB.remover}"
+						update=":formLista:notas :formLista:msgs" ajax="true">
+						<f:setPropertyActionListener for="btRemove"
+							target="#{NotaMB.nota}" value="#{nota}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:decorate>
+</html>

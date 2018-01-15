@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ApuracaoEscolasSamba" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a7fc6e0-fafa-4239-b45e-2da1b9a7d381">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#8FAFCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="18789df9-b6d8-4aa9-8cd4-e478b9368791"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="escolaSamba" class="br.com.prova.model.EscolaSamba">
+		<fieldDescription><![CDATA[escolaSamba]]></fieldDescription>
+	</field>
+	<field name="maiorNota" class="java.lang.Double">
+		<fieldDescription><![CDATA[maiorNota]]></fieldDescription>
+	</field>
+	<field name="media" class="java.lang.Double">
+		<fieldDescription><![CDATA[media]]></fieldDescription>
+	</field>
+	<field name="menorNota" class="java.lang.Double">
+		<fieldDescription><![CDATA[menorNota]]></fieldDescription>
+	</field>
+	<field name="pontos" class="java.lang.Double">
+		<fieldDescription><![CDATA[pontos]]></fieldDescription>
+	</field>
+	<field name="quesito" class="br.com.prova.model.Quesito">
+		<fieldDescription><![CDATA[quesito]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="0" width="413" height="39" uuid="0192a28e-b43f-49c8-a84a-fbd08dc54820"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Resultado Apuração]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="44">
+			<rectangle>
+				<reportElement x="1" y="23" width="554" height="20" backcolor="#CCCCCC" uuid="0922cc2a-560a-4ad2-9684-29f4fa3e3ab3"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="24" width="100" height="20" uuid="4aedd845-6b75-4482-ae62-64292960d382"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Quesito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="24" width="61" height="20" uuid="0d17c99e-1453-4579-95cc-fcf0c2c19464"/>
+				<text><![CDATA[Menor Nota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="24" width="69" height="20" uuid="63df2223-1ec5-46d3-bcdf-dabaaccb7030"/>
+				<text><![CDATA[Maior Nota]]></text>
+			</staticText>
+			<line>
+				<reportElement x="354" y="23" width="1" height="20" uuid="cf7cad0c-977e-4046-acab-b862b4031d9f"/>
+			</line>
+			<staticText>
+				<reportElement x="493" y="24" width="61" height="20" uuid="0e1a8b01-f3ae-41fe-be5c-a4623cfbbcb0"/>
+				<text><![CDATA[Média]]></text>
+			</staticText>
+			<line>
+				<reportElement x="490" y="24" width="1" height="19" uuid="783e67ea-ffa9-4d8a-8938-a7bf05dc0e3c"/>
+			</line>
+			<line>
+				<reportElement x="416" y="24" width="1" height="19" uuid="4055ce71-6598-4db6-bf55-d13a6993cff2"/>
+			</line>
+			<textField>
+				<reportElement x="3" y="0" width="247" height="23" uuid="6c3b02e9-794b-4714-9c85-3ecbc5240e44"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escolaSamba}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement x="354" y="-1" width="1" height="26" uuid="9e746480-dd81-45ce-adba-15ef50de99a5"/>
+			</line>
+			<line>
+				<reportElement x="420" y="-1" width="1" height="26" uuid="1217fdc4-b3b2-4425-98b3-f646135d9515"/>
+			</line>
+			<line>
+				<reportElement x="491" y="-1" width="1" height="26" uuid="4d8c3798-a77b-4468-98c3-a14d555956cd"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="1" height="24" uuid="d3b8577e-6dee-4edc-8580-6b9a9a773558"/>
+			</line>
+			<line>
+				<reportElement x="554" y="1" width="1" height="24" uuid="67b3e2c0-36a5-4147-a71a-59cb9ffcb749"/>
+			</line>
+			<textField>
+				<reportElement x="3" y="1" width="351" height="25" uuid="cf992ecb-c53d-4dc1-a1d4-fdd11b7db85c"/>
+				<textFieldExpression><![CDATA[$F{quesito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="1" width="64" height="24" uuid="f49b1fa8-f17c-4a4b-8933-d432d9b928ff"/>
+				<textFieldExpression><![CDATA[$F{menorNota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="1" width="69" height="26" uuid="3795c7be-8910-4016-896e-99f5949daeaa"/>
+				<textFieldExpression><![CDATA[$F{maiorNota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="1" width="63" height="26" uuid="1da55206-fe45-49fa-beb4-7314735bf99a"/>
+				<textFieldExpression><![CDATA[$F{media}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="20" backcolor="#CCCCCC" uuid="be822331-d01c-4359-8034-a945bd58cb0c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="464" y="0" width="37" height="20" uuid="aad858cf-b81a-47b5-b11c-da6ab5e20898"/>
+				<text><![CDATA[Pontos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="501" y="0" width="53" height="20" uuid="02ab5053-34ab-4ffb-8257-6efebd0fe392"/>
+				<textFieldExpression><![CDATA[$F{pontos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

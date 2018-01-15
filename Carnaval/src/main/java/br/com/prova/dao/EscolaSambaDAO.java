@@ -1,22 +1,22 @@
-package br.com.prova.repository;
+package br.com.prova.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.prova.entities.Entidade;
-import br.com.prova.entities.Quesito;
 import br.com.prova.entitymanager.JPAEntityManager;
 import br.com.prova.interfaces.GenericDAO;
+import br.com.prova.model.Entidade;
+import br.com.prova.model.EscolaSamba;
 
-public class QuesitoDAO implements GenericDAO {
+public class EscolaSambaDAO implements GenericDAO {
 
 	private EntityManager entityManager;
-	private static QuesitoDAO instance;
+	private static EscolaSambaDAO instance;
 
-	public static QuesitoDAO getInstance() {
+	public static EscolaSambaDAO getInstance() {
 		if (instance == null) {
-			instance = new QuesitoDAO();
+			instance = new EscolaSambaDAO();
 		}
 
 		return instance;
@@ -25,9 +25,12 @@ public class QuesitoDAO implements GenericDAO {
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {
 		try {
-			return entityManager.find(Quesito.class, id);
+			entityManager = JPAEntityManager.getEntityManager();
+			return entityManager.find(EscolaSamba.class, id);
 		} catch (Exception e) {
-			throw new Exception("[QuesitoDAO] Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao buscar escola por id." + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
 
@@ -36,15 +39,15 @@ public class QuesitoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.persist((Quesito) entidade);
+			entityManager.persist((EscolaSamba) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[QuesitoDAO] Erro ao salvar quesito. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao salvar escola de samba. " + e.getMessage());
 		} finally {
-			entityManager.close();
+			JPAEntityManager.getEntityManager();
 		}
 	}
 
@@ -53,12 +56,12 @@ public class QuesitoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Quesito) entidade);
+			entityManager.merge((EscolaSamba) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao editar escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -67,14 +70,16 @@ public class QuesitoDAO implements GenericDAO {
 	@Override
 	public Boolean remover(Entidade entidade) throws Exception {
 		try {
+			EscolaSamba escolaSamba = (EscolaSamba) entidade;
 			entityManager = JPAEntityManager.getEntityManager();
+			EscolaSamba escolaRemover = entityManager.find(EscolaSamba.class, escolaSamba.getId());
 			entityManager.getTransaction().begin();
-			entityManager.merge((Quesito) entidade);
+			entityManager.remove(escolaRemover);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao remover escola de samba. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -83,11 +88,11 @@ public class QuesitoDAO implements GenericDAO {
 	@Override
 	public Boolean removerPorId(Integer id) throws Exception {
 		try {
-			Quesito quesito = (Quesito) this.getPorId(id);
-			this.remover(quesito);
+			EscolaSamba escolaSamba = (EscolaSamba) this.getPorId(id);
+			this.remover(escolaSamba);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("[QuesitoDAO] Erro ao remover quesito por id." + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao remover escola de samba por id." + e.getMessage());
 		}
 	}
 
@@ -95,9 +100,12 @@ public class QuesitoDAO implements GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		try {
-			return entityManager.createQuery("FROM " + Quesito.class.getName()).getResultList();
+			entityManager = JPAEntityManager.getEntityManager();
+			return entityManager.createQuery("FROM " + EscolaSamba.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("[QuesitoDAO] Erro ao listar quesitos. " + e.getMessage());
+			throw new Exception("[EscolaSambaDAO] Erro ao listar escolas de samba. " + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
 

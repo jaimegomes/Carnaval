@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:decorate template="template/layout.xhtml">
+	<ui:define name="centro">
+		<h1>Apuração Escolas de Samba</h1>
+
+		<h:form id="formLista">
+			<p:messages id="msgs" />
+			<p:dataTable id="radioDT" var="escola"
+				value="#{EscolaSambaMB.escolas}" selection="#{NotaMB.escola}"
+				rowKey="#{escola.id}" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column selectionMode="single"
+					style="width:16px;text-align:center" />
+				<p:column headerText="Escola de Samba">
+					<h:outputText value="#{escola.nome}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dataTable id="notasApuracao" var="nota" value="#{NotaMB.notas}"
+				editable="true" style="margin-bottom:20px" selectionMode="single"
+				selection="#{NotaMB.nota}" rowKey="#{nota.id}">
+				<f:facet name="header">Apuração</f:facet>
+
+				<p:column headerText="Escola">
+					<h:outputText value="#{nota.escolaSamba.nome}" />
+				</p:column>
+				<p:column headerText="Quesito">
+					<h:outputText value="#{nota.quesito.nome}" />
+				</p:column>
+				<p:column headerText="Menor Nota">
+					<h:outputFormat value="#{nota.menorNota}" />
+				</p:column>
+				<p:column headerText="Maior Nota">
+					<h:outputFormat value="#{nota.maiorNota}" />
+				</p:column>
+				<p:column headerText="Media">
+					<h:outputFormat value="#{nota.media}" />
+				</p:column>
+				<p:column headerText="Pontos">
+					<h:outputFormat value="#{nota.pontos}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:decorate>
+</html>

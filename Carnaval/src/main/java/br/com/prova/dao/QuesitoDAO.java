@@ -1,22 +1,22 @@
-package br.com.prova.repository;
+package br.com.prova.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.prova.entities.Entidade;
-import br.com.prova.entities.Jurado;
 import br.com.prova.entitymanager.JPAEntityManager;
 import br.com.prova.interfaces.GenericDAO;
+import br.com.prova.model.Entidade;
+import br.com.prova.model.Quesito;
 
-public class JuradoDAO implements GenericDAO {
+public class QuesitoDAO implements GenericDAO {
 
 	private EntityManager entityManager;
-	private static JuradoDAO instance;
+	private static QuesitoDAO instance;
 
-	public static JuradoDAO getInstance() {
+	public static QuesitoDAO getInstance() {
 		if (instance == null) {
-			instance = new JuradoDAO();
+			instance = new QuesitoDAO();
 		}
 
 		return instance;
@@ -25,9 +25,12 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public Entidade getPorId(Integer id) throws Exception {
 		try {
-			return entityManager.find(Jurado.class, id);
+			entityManager = JPAEntityManager.getEntityManager();
+			return entityManager.find(Quesito.class, id);
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao buscar escola por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao buscar quesito por id." + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
 
@@ -36,15 +39,15 @@ public class JuradoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.persist((Jurado) entidade);
+			entityManager.persist((Quesito) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao salvar jurado. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao salvar quesito. " + e.getMessage());
 		} finally {
-			entityManager.close();
+			JPAEntityManager.getEntityManager();
 		}
 	}
 
@@ -53,12 +56,12 @@ public class JuradoDAO implements GenericDAO {
 		try {
 			entityManager = JPAEntityManager.getEntityManager();
 			entityManager.getTransaction().begin();
-			entityManager.merge((Jurado) entidade);
+			entityManager.merge((Quesito) entidade);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao editar jurado. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao editar quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -67,14 +70,16 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public Boolean remover(Entidade entidade) throws Exception {
 		try {
+			Quesito quesito = (Quesito) entidade;
 			entityManager = JPAEntityManager.getEntityManager();
+			Quesito quesitoRemover = entityManager.find(Quesito.class, quesito.getId());
 			entityManager.getTransaction().begin();
-			entityManager.merge((Jurado) entidade);
+			entityManager.remove(quesitoRemover);
 			entityManager.getTransaction().commit();
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
-			throw new Exception("[JuradoDAO] Erro ao editar jurado. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao remover quesito. " + e.getMessage());
 		} finally {
 			entityManager.close();
 		}
@@ -83,11 +88,11 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public Boolean removerPorId(Integer id) throws Exception {
 		try {
-			Jurado jurado = (Jurado) this.getPorId(id);
-			this.remover(jurado);
+			Quesito quesito = (Quesito) this.getPorId(id);
+			this.remover(quesito);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao remover jurado por id." + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao remover quesito por id." + e.getMessage());
 		}
 	}
 
@@ -95,10 +100,12 @@ public class JuradoDAO implements GenericDAO {
 	@Override
 	public List<Entidade> listar() throws Exception {
 		try {
-			return entityManager.createQuery("FROM " + Jurado.class.getName()).getResultList();
+			entityManager = JPAEntityManager.getEntityManager();
+			return entityManager.createQuery("FROM " + Quesito.class.getName()).getResultList();
 		} catch (Exception e) {
-			throw new Exception("[JuradoDAO] Erro ao listar jurados. " + e.getMessage());
+			throw new Exception("[QuesitoDAO] Erro ao listar quesitos. " + e.getMessage());
+		} finally {
+			entityManager.close();
 		}
 	}
-
 }

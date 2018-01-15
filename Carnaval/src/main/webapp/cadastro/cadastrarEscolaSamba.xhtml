@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:decorate template="../template/layout.xhtml">
+	<ui:define name="centro">
+		<h:form id="formCadastro">
+
+			<p:messages id="messages" />
+			<h1>Cadastro de Escolas de Samba</h1>
+			<p:panelGrid id="dadosEscolaSamba" columns="2">
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" name="nome"
+					value="#{EscolaSambaMB.escola.nome}" maxlength="200" size="60"
+					required="true" requiredMessage="Campo Nome obrigatório!" />
+				<p:outputLabel for="cnpj" name="cnpj" value="CNPJ" />
+				<p:inputMask id="cnpj" size="20" mask="99.999.999/9999-99"
+					required="true" requiredMessage="Campo CNPJ obrigatório!"
+					title="CPNJ" value="#{EscolaSambaMB.escola.cnpj}" />
+				<p:commandButton id="salvar" value="Salvar"
+					actionListener="#{EscolaSambaMB.salvar}" icon="ui ui-icon-star"
+					update=":formLista:escolas messages :formCadastro" ajax="true">
+				</p:commandButton>
+			</p:panelGrid>
+			<br />
+			<br />
+		</h:form>
+		<h:form id="formLista">
+			<p:growl id="msgs" showDetail="true" />
+
+			<p:dataTable id="escolas" var="escola"
+				value="#{EscolaSambaMB.escolas}" editable="true"
+				style="margin-bottom:20px" selectionMode="single"
+				selection="#{EscolaSambaMB.escola}" rowKey="#{escola.id}">
+				<f:facet name="header">Escolas de Samba</f:facet>
+
+				<p:column headerText="Id">
+					<h:outputText value="#{escola.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{escola.nome}" />
+				</p:column>
+				<p:column headerText="CNPJ">
+					<h:outputFormat value="#{escola.cnpjFmt}" />
+				</p:column>
+				<p:column width="25">
+					<p:commandButton icon="ui ui-icon-pencil" id="btEditar"
+						update=":formLista:escolas :formLista:msgs :formCadastro" ajax="true" process="escolas">
+						<f:setPropertyActionListener for="btEditar"
+							target="#{EscolaSambaMB.escola}" value="#{escola}"  />
+					</p:commandButton>
+				</p:column>
+				<p:column width="25">
+					<p:commandButton icon="ui ui-icon-trash" id="btRemove"
+						action="#{EscolaSambaMB.remover}"
+						update=":formLista:escolas :formLista:msgs" ajax="true">
+						<f:setPropertyActionListener for="btRemove"
+							target="#{EscolaSambaMB.escola}" value="#{escola}" />
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:decorate>
+</html>
